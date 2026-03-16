@@ -1,4 +1,4 @@
-# ✈ SkyBook — Flight Booking App
+# SkyBook — Flight Booking App
 
 A full-stack flight booking web application built with **Spring Boot**, **Angular 18**, **Angular Material**, **PostgreSQL**, and **Docker Compose**.
 
@@ -18,12 +18,12 @@ A full-stack flight booking web application built with **Spring Boot**, **Angula
 
 ## Features
 
-- 🔍 Search flights by origin, destination, and date
-- 📋 View available flights with price, duration, and seat count
-- 🎟 Book a flight via a dialog form (name, email, seats)
-- 📧 Look up all bookings by email
-- ❌ Cancel a booking (automatically restores seat availability)
-- 🌱 Auto-seeded sample flight data on first startup
+- Search flights by origin, destination, and date
+- View available flights with price, duration, and seat count
+- Book a flight via a dialog form (name, email, seats)
+- Look up all bookings by email
+- Cancel a booking (automatically restores seat availability)
+- Auto-seeded sample flight data on first startup
 
 ---
 
