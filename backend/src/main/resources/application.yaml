@@ -16,6 +16,29 @@ spring:
 server:
   port: 8080
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    prometheus:
+      enabled: true
+  metrics:
+    tags:
+      application: flight-booking
+  tracing:
+    sampling:
+      probability: 1.0
+
+otel:
+  exporter:
+    otlp:
+      endpoint: http://${JAEGER_HOST:jaeger}:4318
+
 aviastack:
   api-key: ${AVIASTACK_API_KEY:your_api_key_here}
   base-url: https://api.aviationstack.com/v1
+
+loki:
+  host: ${LOKI_HOST:loki}

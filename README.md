@@ -13,6 +13,7 @@ A full-stack flight booking web application built with **Spring Boot**, **Angula
 | Database | PostgreSQL 16 |
 | Containerization | Docker, Docker Compose |
 | Web Server | Nginx (serves Angular + proxies API) |
+| Monitoring | Prometheus, Grafana, Loki, Jaeger (OTel) |
 
 ---
 
@@ -82,6 +83,10 @@ docker-compose up --build
 | Frontend | http://localhost:4200 |
 | Backend API | http://localhost:8080/api |
 | PostgreSQL | localhost:5432 |
+| Prometheus | http://localhost:9090 |
+| Grafana | http://localhost:3000 (admin / admin) |
+| Jaeger UI | http://localhost:16686 |
+| Loki | http://localhost:3100 |
 
 To stop:
 ```bash
