@@ -24,6 +24,7 @@ services:
       DB_NAME: flightdb
       DB_USER: postgres
       DB_PASS: postgres
+      AVIASTACK_API_KEY: ${AVIASTACK_API_KEY:-7cf311da66e8759634f3d799d362e4da}
     depends_on:
       postgres:
         condition: service_healthy

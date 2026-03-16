@@ -1,5 +1,5 @@
 <div class="list-container">
-  <h2>Flights: {{ searchParams.origin }} → {{ searchParams.destination }} on {{ searchParams.date }}</h2>
+  <h2>Flights: {{ searchParams.depIata }} to {{ searchParams.arrIata }} on {{ searchParams.date }}</h2>
 
   <div *ngIf="loading" class="spinner-wrap">
     <mat-spinner />

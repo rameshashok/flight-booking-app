@@ -15,3 +15,7 @@ spring:
 
 server:
   port: 8080
+
+aviastack:
+  api-key: ${AVIASTACK_API_KEY:7cf311da66e8759634f3d799d362e4da}
+  base-url: https://api.aviastack.com/v1

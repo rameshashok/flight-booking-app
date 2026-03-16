@@ -24,16 +24,22 @@ export class FlightSearchComponent {
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.form = this.fb.group({
-      origin: ['', Validators.required],
-      destination: ['', Validators.required],
+      depIata: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
+      arrIata: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
       date: [new Date(), Validators.required]
     });
   }
 
   search() {
     if (this.form.invalid) return;
-    const { origin, destination, date } = this.form.value;
+    const { depIata, arrIata, date } = this.form.value;
     const dateStr = (date as Date).toISOString().split('T')[0];
-    this.router.navigate(['/flights'], { queryParams: { origin, destination, date: dateStr } });
+    this.router.navigate(['/flights'], {
+      queryParams: {
+        depIata: (depIata as string).toUpperCase(),
+        arrIata: (arrIata as string).toUpperCase(),
+        date: dateStr
+      }
+    });
   }
 }

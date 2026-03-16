@@ -23,9 +23,9 @@ public class FlightController {
 
     @GetMapping("/search")
     public List<Flight> search(
-            @RequestParam String origin,
-            @RequestParam String destination,
+            @RequestParam String depIata,
+            @RequestParam String arrIata,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        return flightService.searchFlights(origin, destination, date);
+        return flightService.searchFlights(depIata, arrIata, date);
     }
 }
