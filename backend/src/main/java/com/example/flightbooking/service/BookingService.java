@@ -18,9 +18,10 @@ public class BookingService {
     private final FlightRepository flightRepository;
 
     @Transactional
-    public Booking createBooking(Long flightId, String name, String email, int seats) {
-        Flight flight = flightRepository.findById(flightId)
-                .orElseThrow(() -> new RuntimeException("Flight not found"));
+    public Booking createBooking(Flight flightData, String name, String email, int seats) {
+        // Upsert: persist the flight if it doesn't exist in DB yet (AviaStack flights are transient)
+        Flight flight = flightRepository.findById(flightData.getId())
+                .orElseGet(() -> flightRepository.save(flightData));
 
         if (flight.getAvailableSeats() < seats) {
             throw new RuntimeException("Not enough seats available");

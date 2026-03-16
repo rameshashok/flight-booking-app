@@ -44,6 +44,13 @@ export class BookingDialogComponent {
     const { passengerName, passengerEmail, seats } = this.form.value;
     this.flightService.createBooking({
       flightId: this.flight.id,
+      flightNumber: this.flight.flightNumber,
+      origin: this.flight.origin,
+      destination: this.flight.destination,
+      departureTime: this.flight.departureTime,
+      arrivalTime: this.flight.arrivalTime,
+      price: this.flight.price,
+      availableSeats: this.flight.availableSeats,
       passengerName: passengerName!,
       passengerEmail: passengerEmail!,
       seats: seats!

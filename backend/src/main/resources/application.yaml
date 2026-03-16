@@ -17,5 +17,5 @@ server:
   port: 8080
 
 aviastack:
-  api-key: ${AVIASTACK_API_KEY:7cf311da66e8759634f3d799d362e4da}
-  base-url: https://api.aviastack.com/v1
+  api-key: ${AVIASTACK_API_KEY:your_api_key_here}
+  base-url: https://api.aviationstack.com/v1

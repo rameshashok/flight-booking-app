@@ -128,14 +128,14 @@ Open http://localhost:4200
 | Method | Endpoint | Description |
 |---|---|---|
 | `GET` | `/api/flights` | Get all flights from DB |
-| `GET` | `/api/flights/search?depIata=&arrIata=&date=` | Search live flights via AviaStack |
+| `GET` | `/api/flights/search?depIata=&arrIata=` | Search real-time flights via aviationstack |
 
 **Search example:**
 ```
-GET /api/flights/search?depIata=JFK&arrIata=LAX&date=2025-07-01
+GET /api/flights/search?depIata=JFK&arrIata=LAX
 ```
 
-> Flight search uses the [AviaStack](https://aviastack.com/) free tier API. Requires a valid `AVIASTACK_API_KEY`.
+> Flight search uses the [aviationstack](https://aviationstack.com/) free tier API (`/v1/flights`). Date-based search requires a paid plan. Requires a valid `AVIASTACK_API_KEY`.
 
 ### Bookings
 
@@ -167,7 +167,7 @@ Environment variables used by the backend (set in `docker-compose.yml` or your e
 | `DB_NAME` | `flightdb` | Database name |
 | `DB_USER` | `postgres` | Database username |
 | `DB_PASS` | `postgres` | Database password |
-| `AVIASTACK_API_KEY` | *(required)* | AviaStack API key — get one free at [aviastack.com](https://aviastack.com/) |
+| `AVIASTACK_API_KEY` | *(required)* | aviationstack API key — get one free at [aviationstack.com](https://aviationstack.com/) |
 
 ---
 

@@ -5,7 +5,6 @@ import com.example.flightbooking.repository.FlightRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -15,8 +14,8 @@ public class FlightService {
     private final FlightRepository flightRepository;
     private final AviaStackService aviaStackService;
 
-    public List<Flight> searchFlights(String depIata, String arrIata, LocalDate date) {
-        return aviaStackService.searchFlights(depIata, arrIata, date);
+    public List<Flight> searchFlights(String depIata, String arrIata) {
+        return aviaStackService.searchFlights(depIata, arrIata);
     }
 
     public List<Flight> getAllFlights() {

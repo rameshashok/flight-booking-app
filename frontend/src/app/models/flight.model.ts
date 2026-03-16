@@ -21,6 +21,13 @@ export interface Booking {
 
 export interface BookingRequest {
   flightId: number;
+  flightNumber: string;
+  origin: string;
+  destination: string;
+  departureTime: string;
+  arrivalTime: string;
+  price: number;
+  availableSeats: number;
   passengerName: string;
   passengerEmail: string;
   seats: number;

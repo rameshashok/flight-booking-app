@@ -34,7 +34,7 @@ export class FlightListComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.searchParams = params;
       this.loading = true;
-      this.flightService.searchFlights(params['depIata'], params['arrIata'], params['date'])
+      this.flightService.searchFlights(params['depIata'], params['arrIata'])
         .subscribe({ next: f => { this.flights = f; this.loading = false; }, error: () => this.loading = false });
     });
   }

@@ -9,8 +9,8 @@ export class FlightService {
 
   constructor(private http: HttpClient) {}
 
-  searchFlights(depIata: string, arrIata: string, date: string): Observable<Flight[]> {
-    const params = new HttpParams().set('depIata', depIata).set('arrIata', arrIata).set('date', date);
+  searchFlights(depIata: string, arrIata: string): Observable<Flight[]> {
+    const params = new HttpParams().set('depIata', depIata).set('arrIata', arrIata);
     return this.http.get<Flight[]>(`${this.api}/flights/search`, { params });
   }
 

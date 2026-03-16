@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -30,20 +29,22 @@ public class AviaStackService {
         this.apiKey = apiKey;
     }
 
-    public List<Flight> searchFlights(String depIata, String arrIata, LocalDate date) {
+    public List<Flight> searchFlights(String depIata, String arrIata) {
         try {
             AviaStackResponse response = webClient.get()
                     .uri(uri -> uri.path("/flights")
                             .queryParam("access_key", apiKey)
                             .queryParam("dep_iata", depIata.toUpperCase())
                             .queryParam("arr_iata", arrIata.toUpperCase())
-                            .queryParam("flight_date", date.toString())
                             .build())
                     .retrieve()
                     .bodyToMono(AviaStackResponse.class)
                     .block();
 
-            if (response == null || response.getData() == null) return Collections.emptyList();
+            if (response == null || response.getData() == null) {
+                log.warn("No data returned from aviationstack for {}->{}", depIata, arrIata);
+                return Collections.emptyList();
+            }
 
             return response.getData().stream()
                     .filter(f -> f.getFlight() != null && f.getDeparture() != null && f.getArrival() != null)
@@ -75,7 +76,11 @@ public class AviaStackService {
         try {
             return LocalDateTime.parse(iso, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
         } catch (Exception e) {
-            return LocalDateTime.parse(iso, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            try {
+                return LocalDateTime.parse(iso, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            } catch (Exception ex) {
+                return null;
+            }
         }
     }
 }
