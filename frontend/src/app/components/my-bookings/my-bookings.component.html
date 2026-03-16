@@ -1,0 +1,37 @@
+<div class="list-container">
+  <h2>My Bookings</h2>
+
+  <form [formGroup]="form" (ngSubmit)="search()" class="email-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Your Email</mat-label>
+      <input matInput formControlName="email" type="email" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Find Bookings</button>
+  </form>
+
+  <div *ngIf="searched && bookings.length === 0" class="no-results">No bookings found.</div>
+
+  <mat-card *ngFor="let booking of bookings" class="flight-card">
+    <mat-card-content>
+      <div class="flight-row">
+        <div class="flight-info">
+          <span class="flight-number">{{ booking.flight.flightNumber }}</span>
+          <div class="cities">{{ booking.flight.origin }} → {{ booking.flight.destination }}</div>
+          <div>{{ booking.flight.departureTime | date:'medium' }}</div>
+          <div>Passenger: {{ booking.passengerName }} | Seats: {{ booking.seats }}</div>
+          <div>Booked: {{ booking.bookedAt | date:'short' }}</div>
+        </div>
+        <div class="flight-price">
+          <mat-chip [class]="booking.status === 'CANCELLED' ? 'warn-chip' : 'ok-chip'">
+            {{ booking.status }}
+          </mat-chip>
+          <button mat-stroked-button color="warn"
+            *ngIf="booking.status === 'CONFIRMED'"
+            (click)="cancel(booking.id)">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,31 @@
+<div class="search-container">
+  <mat-card class="search-card">
+    <mat-card-header>
+      <mat-card-title>✈ Find Your Flight</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="search()" class="search-form">
+        <mat-form-field appearance="outline">
+          <mat-label>From</mat-label>
+          <input matInput formControlName="origin" placeholder="e.g. New York" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>To</mat-label>
+          <input matInput formControlName="destination" placeholder="e.g. Los Angeles" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Date</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="date" />
+          <mat-datepicker-toggle matIconSuffix [for]="picker" />
+          <mat-datepicker #picker />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+          Search Flights
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

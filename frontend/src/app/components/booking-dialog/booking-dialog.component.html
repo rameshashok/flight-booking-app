@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>Book Flight {{ flight.flightNumber }}</h2>
+<mat-dialog-content>
+  <p>{{ flight.origin }} → {{ flight.destination }} | ${{ flight.price }} per seat</p>
+  <form [formGroup]="form" class="booking-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Full Name</mat-label>
+      <input matInput formControlName="passengerName" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="passengerEmail" type="email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Seats</mat-label>
+      <mat-select formControlName="seats">
+        <mat-option *ngFor="let n of [1,2,3,4,5]" [value]="n">{{ n }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" (click)="confirm()" [disabled]="form.invalid || loading">
+    {{ loading ? 'Booking...' : 'Confirm Booking' }}
+  </button>
+</mat-dialog-actions>

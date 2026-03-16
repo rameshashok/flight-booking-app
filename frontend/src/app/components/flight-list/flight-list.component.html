@@ -1,0 +1,37 @@
+<div class="list-container">
+  <h2>Flights: {{ searchParams.origin }} → {{ searchParams.destination }} on {{ searchParams.date }}</h2>
+
+  <div *ngIf="loading" class="spinner-wrap">
+    <mat-spinner />
+  </div>
+
+  <div *ngIf="!loading && flights.length === 0" class="no-results">
+    No flights found for this route and date.
+  </div>
+
+  <mat-card *ngFor="let flight of flights" class="flight-card">
+    <mat-card-content>
+      <div class="flight-row">
+        <div class="flight-info">
+          <span class="flight-number">{{ flight.flightNumber }}</span>
+          <div class="times">
+            <span>{{ flight.departureTime | date:'shortTime' }}</span>
+            <span class="route-arrow"> ──── {{ duration(flight.departureTime, flight.arrivalTime) }} ────▶ </span>
+            <span>{{ flight.arrivalTime | date:'shortTime' }}</span>
+          </div>
+          <div class="cities">{{ flight.origin }} → {{ flight.destination }}</div>
+        </div>
+        <div class="flight-price">
+          <div class="price">${{ flight.price }}</div>
+          <mat-chip [class]="flight.availableSeats < 10 ? 'warn-chip' : ''">
+            {{ flight.availableSeats }} seats left
+          </mat-chip>
+          <button mat-raised-button color="primary" (click)="book(flight)"
+            [disabled]="flight.availableSeats === 0">
+            Book
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

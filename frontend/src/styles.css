@@ -1,0 +1,118 @@
+@import '@angular/material/prebuilt-themes/azure-blue.css';
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Roboto, sans-serif;
+  background: #f5f5f5;
+}
+
+.spacer { flex: 1; }
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  padding: 60px 16px;
+}
+
+.search-card {
+  width: 100%;
+  max-width: 500px;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 16px;
+}
+
+.list-container {
+  max-width: 800px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+.list-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.flight-card {
+  margin-bottom: 16px;
+}
+
+.flight-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.flight-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.flight-number {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #1976d2;
+}
+
+.times {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 1rem;
+}
+
+.route-arrow { color: #888; font-size: 0.85rem; }
+
+.cities { color: #555; }
+
+.flight-price {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 100px;
+}
+
+.price {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+.warn-chip { background-color: #ffccbc !important; }
+.ok-chip { background-color: #c8e6c9 !important; }
+
+.spinner-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.no-results {
+  text-align: center;
+  color: #888;
+  padding: 40px;
+}
+
+.email-form {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.full-width { width: 100%; }
