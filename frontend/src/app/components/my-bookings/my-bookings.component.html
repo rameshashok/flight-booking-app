@@ -18,10 +18,18 @@
           <span class="flight-number">{{ booking.flight.flightNumber }}</span>
           <div class="cities">{{ booking.flight.origin }} → {{ booking.flight.destination }}</div>
           <div>{{ booking.flight.departureTime | date:'medium' }}</div>
-          <div>Passenger: {{ booking.passengerName }} | Seats: {{ booking.seats }}</div>
+          <div>Passenger: {{ booking.passengerName }}</div>
+          <div>
+            {{ booking.seats }} seat(s) &nbsp;|&nbsp;
+            <strong>{{ booking.seatClass }}</strong>
+          </div>
+          <div *ngIf="booking.ancillaries && booking.ancillaries.length > 0" class="ancillary-tags">
+            <mat-chip *ngFor="let a of booking.ancillaries" class="anc-chip">{{ a | replace:'_':' ' | titlecase }}</mat-chip>
+          </div>
           <div>Booked: {{ booking.bookedAt | date:'short' }}</div>
         </div>
         <div class="flight-price">
+          <div class="price">${{ booking.totalPrice | number:'1.2-2' }}</div>
           <mat-chip [class]="booking.status === 'CANCELLED' ? 'warn-chip' : 'ok-chip'">
             {{ booking.status }}
           </mat-chip>

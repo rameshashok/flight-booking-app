@@ -2,7 +2,9 @@ package com.example.flightbooking.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -24,6 +26,17 @@ public class Booking {
 
     @Enumerated(EnumType.STRING)
     private BookingStatus status = BookingStatus.CONFIRMED;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private SeatClass seatClass = SeatClass.ECONOMY;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "booking_ancillaries", joinColumns = @JoinColumn(name = "booking_id"))
+    @Enumerated(EnumType.STRING)
+    private List<Ancillary> ancillaries;
+
+    private BigDecimal totalPrice;
 
     public enum BookingStatus { CONFIRMED, CANCELLED }
 }

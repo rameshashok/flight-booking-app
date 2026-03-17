@@ -9,12 +9,30 @@ export interface Flight {
   availableSeats: number;
 }
 
+export type SeatClass = 'ECONOMY' | 'BUSINESS' | 'FIRST';
+
+export interface SeatClassOption {
+  value: SeatClass;
+  label: string;
+  multiplier: number;
+  description: string;
+}
+
+export interface AncillaryOption {
+  code: string;
+  label: string;
+  price: number;
+}
+
 export interface Booking {
   id: number;
   flight: Flight;
   passengerName: string;
   passengerEmail: string;
   seats: number;
+  seatClass: SeatClass;
+  ancillaries: string[];
+  totalPrice: number;
   bookedAt: string;
   status: 'CONFIRMED' | 'CANCELLED';
 }
@@ -31,4 +49,6 @@ export interface BookingRequest {
   passengerName: string;
   passengerEmail: string;
   seats: number;
+  seatClass: SeatClass;
+  ancillaries: string[];
 }

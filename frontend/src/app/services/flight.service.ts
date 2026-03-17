@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Booking, BookingRequest, Flight } from '../models/flight.model';
+import { AncillaryOption, Booking, BookingRequest, Flight } from '../models/flight.model';
 
 @Injectable({ providedIn: 'root' })
 export class FlightService {
@@ -29,5 +29,9 @@ export class FlightService {
 
   cancelBooking(id: number): Observable<Booking> {
     return this.http.put<Booking>(`${this.api}/bookings/${id}/cancel`, {});
+  }
+
+  getAncillaries(): Observable<AncillaryOption[]> {
+    return this.http.get<AncillaryOption[]>(`${this.api}/bookings/ancillaries`);
   }
 }

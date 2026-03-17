@@ -89,6 +89,19 @@ body {
 .warn-chip { background-color: #ffccbc !important; }
 .ok-chip { background-color: #c8e6c9 !important; }
 
+.ancillary-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 4px 0;
+}
+
+.anc-chip {
+  font-size: 0.75rem !important;
+  height: 24px !important;
+  background-color: #e3f2fd !important;
+}
+
 .spinner-wrap {
   display: flex;
   justify-content: center;

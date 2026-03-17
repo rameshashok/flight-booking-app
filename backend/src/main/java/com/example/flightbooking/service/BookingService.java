@@ -1,13 +1,17 @@
 package com.example.flightbooking.service;
 
+import com.example.flightbooking.model.Ancillary;
 import com.example.flightbooking.model.Booking;
 import com.example.flightbooking.model.Flight;
+import com.example.flightbooking.model.SeatClass;
 import com.example.flightbooking.repository.BookingRepository;
 import com.example.flightbooking.repository.FlightRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @Service
@@ -18,8 +22,8 @@ public class BookingService {
     private final FlightRepository flightRepository;
 
     @Transactional
-    public Booking createBooking(Flight flightData, String name, String email, int seats) {
-        // Upsert: persist the flight if it doesn't exist in DB yet (AviaStack flights are transient)
+    public Booking createBooking(Flight flightData, String name, String email,
+                                  int seats, SeatClass seatClass, List<Ancillary> ancillaries) {
         Flight flight = flightRepository.findById(flightData.getId())
                 .orElseGet(() -> flightRepository.save(flightData));
 
@@ -30,11 +34,24 @@ public class BookingService {
         flight.setAvailableSeats(flight.getAvailableSeats() - seats);
         flightRepository.save(flight);
 
+        BigDecimal basePrice = flight.getPrice()
+                .multiply(BigDecimal.valueOf(seatClass.priceMultiplier))
+                .multiply(BigDecimal.valueOf(seats));
+
+        BigDecimal ancillaryTotal = ancillaries.stream()
+                .map(a -> BigDecimal.valueOf(a.price))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal totalPrice = basePrice.add(ancillaryTotal).setScale(2, RoundingMode.HALF_UP);
+
         Booking booking = new Booking();
         booking.setFlight(flight);
         booking.setPassengerName(name);
         booking.setPassengerEmail(email);
         booking.setSeats(seats);
+        booking.setSeatClass(seatClass);
+        booking.setAncillaries(ancillaries);
+        booking.setTotalPrice(totalPrice);
         return bookingRepository.save(booking);
     }
 

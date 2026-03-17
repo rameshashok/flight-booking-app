@@ -9,6 +9,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FlightService } from '../../services/flight.service';
 import { Booking } from '../../models/flight.model';
+import { ReplacePipe } from '../../pipes/replace.pipe';
 
 @Component({
   selector: 'app-my-bookings',
@@ -16,7 +17,8 @@ import { Booking } from '../../models/flight.model';
   imports: [
     CommonModule, ReactiveFormsModule,
     MatFormFieldModule, MatInputModule, MatButtonModule,
-    MatCardModule, MatChipsModule, MatSnackBarModule
+    MatCardModule, MatChipsModule, MatSnackBarModule,
+    ReplacePipe
   ],
   templateUrl: './my-bookings.component.html'
 })

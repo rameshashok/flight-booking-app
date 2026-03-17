@@ -1,28 +1,106 @@
 <h2 mat-dialog-title>Book Flight {{ flight.flightNumber }}</h2>
+
 <mat-dialog-content>
-  <p>{{ flight.origin }} → {{ flight.destination }} | ${{ flight.price }} per seat</p>
-  <form [formGroup]="form" class="booking-form">
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Full Name</mat-label>
-      <input matInput formControlName="passengerName" />
-    </mat-form-field>
+  <mat-stepper orientation="vertical" #stepper>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Email</mat-label>
-      <input matInput formControlName="passengerEmail" type="email" />
-    </mat-form-field>
+    <!-- Step 1: Passenger Details -->
+    <mat-step label="Passenger Details" [stepControl]="passengerForm">
+      <form [formGroup]="passengerForm" class="step-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Full Name</mat-label>
+          <input matInput formControlName="passengerName" />
+        </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Seats</mat-label>
-      <mat-select formControlName="seats">
-        <mat-option *ngFor="let n of [1,2,3,4,5]" [value]="n">{{ n }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </form>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="passengerEmail" type="email" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Number of Seats</mat-label>
+          <mat-select formControlName="seats">
+            <mat-option *ngFor="let n of [1,2,3,4,5,6,7,8,9]" [value]="n">{{ n }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <p class="section-label">Seat Class</p>
+        <div class="seat-class-grid">
+          <div *ngFor="let sc of seatClasses"
+               class="seat-class-card"
+               [class.selected]="passengerForm.value.seatClass === sc.value"
+               (click)="passengerForm.patchValue({ seatClass: sc.value })">
+            <div class="sc-label">{{ sc.label }}</div>
+            <div class="sc-desc">{{ sc.description }}</div>
+            <div class="sc-price">x{{ sc.multiplier }} price</div>
+          </div>
+        </div>
+
+        <div class="step-actions">
+          <button mat-raised-button color="primary" matStepperNext [disabled]="passengerForm.invalid">
+            Next
+          </button>
+        </div>
+      </form>
+    </mat-step>
+
+    <!-- Step 2: Ancillaries -->
+    <mat-step label="Add Extras (Optional)">
+      <div class="ancillary-grid">
+        <div *ngFor="let a of ancillaries"
+             class="ancillary-card"
+             [class.selected]="selectedAncillaries.has(a.code)"
+             (click)="toggleAncillary(a.code)">
+          <div class="anc-label">{{ a.label }}</div>
+          <div class="anc-price">+${{ a.price }}</div>
+        </div>
+      </div>
+      <div class="step-actions">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-raised-button color="primary" matStepperNext>Next</button>
+      </div>
+    </mat-step>
+
+    <!-- Step 3: Summary -->
+    <mat-step label="Review & Confirm">
+      <div class="summary">
+        <div class="summary-row">
+          <span>Flight</span>
+          <span>{{ flight.flightNumber }} — {{ flight.origin }} to {{ flight.destination }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Passenger</span>
+          <span>{{ passengerForm.value.passengerName }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Seats</span>
+          <span>{{ passengerForm.value.seats }} x {{ selectedSeatClass.label }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Base Fare</span>
+          <span>${{ basePrice | number:'1.2-2' }}</span>
+        </div>
+        <ng-container *ngIf="selectedAncillaries.size > 0">
+          <mat-divider />
+          <div class="summary-row" *ngFor="let a of ancillaries">
+            <ng-container *ngIf="selectedAncillaries.has(a.code)">
+              <span>{{ a.label }}</span>
+              <span>+${{ a.price }}</span>
+            </ng-container>
+          </div>
+        </ng-container>
+        <mat-divider />
+        <div class="summary-row total">
+          <span>Total</span>
+          <span>${{ totalPrice | number:'1.2-2' }}</span>
+        </div>
+      </div>
+      <div class="step-actions">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-raised-button color="primary" (click)="confirm()" [disabled]="loading">
+          {{ loading ? 'Booking...' : 'Confirm Booking' }}
+        </button>
+      </div>
+    </mat-step>
+
+  </mat-stepper>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button color="primary" (click)="confirm()" [disabled]="form.invalid || loading">
-    {{ loading ? 'Booking...' : 'Confirm Booking' }}
-  </button>
-</mat-dialog-actions>

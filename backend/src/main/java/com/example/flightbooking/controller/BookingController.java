@@ -1,7 +1,9 @@
 package com.example.flightbooking.controller;
 
+import com.example.flightbooking.model.Ancillary;
 import com.example.flightbooking.model.Booking;
 import com.example.flightbooking.model.Flight;
+import com.example.flightbooking.model.SeatClass;
 import com.example.flightbooking.service.BookingService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +33,8 @@ public class BookingController {
         private String passengerName;
         private String passengerEmail;
         private int seats;
+        private SeatClass seatClass = SeatClass.ECONOMY;
+        private List<Ancillary> ancillaries = List.of();
 
         Flight toFlight() {
             Flight f = new Flight();
@@ -48,7 +52,10 @@ public class BookingController {
 
     @PostMapping
     public Booking createBooking(@RequestBody BookingRequest req) {
-        return bookingService.createBooking(req.toFlight(), req.getPassengerName(), req.getPassengerEmail(), req.getSeats());
+        return bookingService.createBooking(
+            req.toFlight(), req.getPassengerName(), req.getPassengerEmail(),
+            req.getSeats(), req.getSeatClass(), req.getAncillaries()
+        );
     }
 
     @GetMapping
@@ -60,4 +67,13 @@ public class BookingController {
     public Booking cancel(@PathVariable Long id) {
         return bookingService.cancelBooking(id);
     }
+
+    @GetMapping("/ancillaries")
+    public List<AncillaryOption> getAncillaries() {
+        return List.of(Ancillary.values()).stream()
+            .map(a -> new AncillaryOption(a.name(), a.label, a.price))
+            .toList();
+    }
+
+    record AncillaryOption(String code, String label, double price) {}
 }

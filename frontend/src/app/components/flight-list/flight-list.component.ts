@@ -40,7 +40,11 @@ export class FlightListComponent implements OnInit {
   }
 
   book(flight: Flight) {
-    this.dialog.open(BookingDialogComponent, { width: '400px', data: flight });
+    this.dialog.open(BookingDialogComponent, {
+      width: '620px',
+      maxHeight: '90vh',
+      data: flight
+    });
   }
 
   duration(dep: string, arr: string): string {
